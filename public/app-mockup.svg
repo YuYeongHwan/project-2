@@ -1,0 +1,16 @@
+<svg width='800' height='600' viewBox='0 0 800 600' fill='none' xmlns='http://www.w3.org/2000/svg'>
+<rect width='800' height='600' fill='#18181B'/>
+<rect x='40' y='40' width='720' height='60' rx='8' fill='#27272A'/>
+<rect x='40' y='120' width='250' height='440' rx='8' fill='#27272A'/>
+<rect x='310' y='120' width='450' height='200' rx='8' fill='#27272A'/>
+<rect x='310' y='140' width='150' height='160' rx='4' fill='#3F3F46'/>
+<rect x='480' y='140' width='260' height='40' rx='4' fill='#3F3F46'/>
+<rect x='480' y='190' width='180' height='20' rx='4' fill='#3F3F46'/>
+<rect x='310' y='340' width='450' height='220' rx='8' fill='#6D28D9' fill-opacity='0.2'/>
+<rect x='330' y='360' width='120' height='180' rx='4' fill='#6D28D9' fill-opacity='0.5'/>
+<rect x='470' y='360' width='120' height='180' rx='4' fill='#6D28D9' fill-opacity='0.5'/>
+<rect x='610' y='360' width='120' height='180' rx='4' fill='#6D28D9' fill-opacity='0.5'/>
+<circle cx='60' cy='70' r='10' fill='#4F4F4F'/>
+<circle cx='90' cy='70' r='10' fill='#4F4F4F'/>
+<circle cx='120' cy='70' r='10' fill='#4F4F4F'/>
+</svg>

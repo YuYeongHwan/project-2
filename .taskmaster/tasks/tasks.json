@@ -1,0 +1,139 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 16,
+        "title": "Initialize Project and Install Core Dependencies",
+        "description": "Set up the Next.js project with essential libraries for the tech stack, including Supabase for the database/auth and a UI component library for the frontend.",
+        "details": "In the existing Next.js project, install the following packages: `@supabase/supabase-js`, `@supabase/auth-helpers-nextjs`, `@supabase/auth-helpers-react`, and a UI library like `@mui/material` and its dependencies. Configure environment variables for Supabase URL and keys in a `.env.local` file.",
+        "testStrategy": "Verify successful installation by running `npm install` or `yarn install`. Check that the application still builds and runs (`next dev`) without errors. Confirm environment variables are loaded correctly.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Set Up Supabase Authentication",
+        "description": "Implement user authentication (Sign Up, Sign In, Sign Out) using Supabase Auth. This includes creating the necessary UI components and API logic.",
+        "details": "Create a Supabase client helper in `lib/supabaseClient.js`. Implement authentication pages in `/pages/auth/signin.js` and `/pages/auth/signup.js`. Use the Supabase Auth UI or build custom forms with Material UI components. Protect routes using Supabase auth helpers.",
+        "testStrategy": "Manually test the full authentication flow: user can sign up, gets redirected, can sign out, and then sign back in. Check the `auth.users` table in the Supabase dashboard to confirm user creation. Test that protected pages are inaccessible to unauthenticated users.",
+        "priority": "high",
+        "dependencies": [
+          16
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Create User Profile Data Model and API Endpoints",
+        "description": "Define the database schema for user profiles and create API routes to manage profile data.",
+        "details": "In Supabase, create a `profiles` table with columns: `id` (foreign key to `auth.users.id`), `gender`, `age`, `height`, `weight`, `preferred_style`, `full_body_photo_url`, `face_photo_url`. Create Next.js API routes (e.g., `/pages/api/profile.js`) to handle GET, POST, and PUT requests for fetching and updating the user's profile data.",
+        "testStrategy": "Use an API client like Postman or Thunder Client to test the endpoints. Verify that creating, retrieving, and updating a profile works correctly and that the data is persisted in the Supabase table. Ensure Row Level Security (RLS) is enabled so users can only access their own profile.",
+        "priority": "high",
+        "dependencies": [
+          17
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 19,
+        "title": "Build User Profile Page UI",
+        "description": "Develop the frontend page where authenticated users can view and edit their profile information.",
+        "details": "Create a new page at `/pages/profile.js`. Use Material UI components (TextField, Button, Select) to build a form for editing profile data. Fetch the user's current profile data on page load using the API from task 18. Implement a save function that sends updated data to the backend.",
+        "testStrategy": "Manually test the UI. Ensure the form is pre-filled with the user's data. Modify the data, save it, and then reload the page to confirm the changes have been persisted and are displayed correctly.",
+        "priority": "medium",
+        "dependencies": [
+          18
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Implement Photo Upload to Supabase Storage",
+        "description": "Add functionality to the user profile page for uploading face and full-body photos to Supabase Storage.",
+        "details": "Create a new component, `ImageUploader.js`. Use Supabase Storage's `upload()` method. On successful upload, retrieve the public URL of the image and update the corresponding URL field (`full_body_photo_url` or `face_photo_url`) in the user's `profiles` table via the profile API.",
+        "testStrategy": "Test the upload functionality with various image files (jpg, png). Verify that the file appears in the Supabase Storage bucket. Check that the `profiles` table is updated with the correct public URL. Ensure the UI provides feedback on upload progress, success, or failure.",
+        "priority": "medium",
+        "dependencies": [
+          19
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Integrate Weather Data API",
+        "description": "Fetch real-time weather data from an external API to be used in the recommendation logic.",
+        "details": "Choose and sign up for a weather API (e.g., OpenWeatherMap). Create a new server-side API route in Next.js (`/pages/api/weather.js`) that takes location coordinates (or a default city for MVP) and returns current weather data (temperature, precipitation). Store the API key securely in environment variables.",
+        "testStrategy": "Call the `/api/weather` endpoint directly and verify that it returns a valid JSON response with the expected weather data. Implement basic error handling for when the external API is down or returns an error.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Create Clothing Item Data Model and Seed Data",
+        "description": "Define the database schema for clothing items and populate it with initial data for generating recommendations.",
+        "details": "In Supabase, create a `clothing_items` table with columns like `id`, `name`, `brand`, `category` (e.g., 'top', 'bottom', 'outerwear'), `image_url`, `purchase_link`, `color_tags` (array), `style_tags` (array). Write a script to seed this table with at least 20-30 sample items covering different categories and styles.",
+        "testStrategy": "Query the `clothing_items` table directly from the Supabase SQL editor to ensure the schema is correct and the seed data has been populated successfully. Verify that data types like arrays are handled correctly.",
+        "priority": "high",
+        "dependencies": [
+          16
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Develop MVP Recommendation Engine",
+        "description": "Create the initial version of the recommendation logic that generates an outfit based on user profile, weather, and basic AI analysis.",
+        "details": "Create a service module (`services/recommendationEngine.js`). This function will take `userProfile`, `weatherData`, and `aiAnalysis` as input. For the MVP, `aiAnalysis` can be a mock object (e.g., `{ personalColor: 'warm', bodyShape: 'hourglass' }`). The engine will use a set of rules (e.g., if temp < 10, include 'outerwear') to select item categories, then filter the `clothing_items` table based on these rules and color/style tags.",
+        "testStrategy": "Write unit tests for the recommendation engine function. Provide various inputs (different weather, profiles) and assert that the output (a list of clothing item IDs or objects) is logical and follows the defined rules.",
+        "priority": "high",
+        "dependencies": [
+          18,
+          21,
+          22
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 24,
+        "title": "Build Daily Recommendation Display Page",
+        "description": "Create the main UI where the user can see their daily recommended outfit.",
+        "details": "Create the main dashboard page (`/pages/dashboard.js`). On page load, this page will orchestrate the calls: fetch user profile, fetch weather, and then call a new API route (`/api/recommend`) that runs the recommendation engine. The page will then display the returned clothing items using Material UI Cards, showing the image, brand/name, and a link to purchase.",
+        "testStrategy": "Manually test the dashboard page as a logged-in user. Verify that a full outfit (top, bottom, etc.) is displayed. Check that all images load and links are correct. Test loading states and what happens if no recommendation can be generated.",
+        "priority": "high",
+        "dependencies": [
+          23
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 25,
+        "title": "Set up n8n Workflow for AI Analysis (Placeholder)",
+        "description": "Configure a basic n8n workflow that can be triggered to perform AI analysis, starting with a placeholder or mock response.",
+        "details": "Set up an n8n instance. Create a new workflow with a Webhook trigger. This webhook will receive a user ID and image URL. For the MVP, the workflow will simply return a hardcoded JSON object (e.g., `{\"personalColor\": \"Cool Summer\", \"bodyShape\": \"Rectangle\"}`). Create a Next.js API route that calls this n8n webhook when a new photo is uploaded.",
+        "testStrategy": "Trigger the n8n webhook using an API client and verify it returns the mock JSON response. Call the Next.js API route that triggers the workflow and confirm it successfully communicates with n8n and gets the response back.",
+        "priority": "low",
+        "dependencies": [
+          20
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-24T02:35:01.849Z",
+      "updated": "2025-09-24T05:50:25.790Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

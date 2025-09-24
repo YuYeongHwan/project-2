@@ -45,3 +45,102 @@ UI/UX 핵심 고려사항: 예를 들어, "모바일 우선(Mobile-first)" 디�
 MVP(최소 기능 제품) 범위: 위 기능들 중 가장 핵심적으로 먼저 구현해야 할 기능은 무엇이며, 다음 단계에 구현할 기능은 무엇인지 명확히 하면 개발 우선순위를 설정하는 데 좋습니다.
 
 이 질문들에 대한 답변이 있다면, AI 코딩 에이전트가 더 명확하고 효율적으로 개발 작업을 수행할 수 있을 것입니다.
+
+네, 제공해주신 PRD 초안과 추가 질문에 대한 내용을 바탕으로 AI 코딩 에이전트가 처리할 수 있는 JSON 형태의 PRD를 작성해드리겠습니다.
+
+JSON
+{
+  "project": {
+    "name": "AI Styling Recommendation Service",
+    "goal": "Develop a service that analyzes user's environment (weather, date) and personal characteristics (personal color, body shape) using AI to recommend daily customized outfits, providing photos and purchase links for the recommended clothing."
+  },
+  "features": [
+    {
+      "name": "User Profile",
+      "description": "Users input gender, age, height, weight, preferred style, and upload face/full-body photos.",
+      "inputs": ["gender", "age", "height", "weight", "preferredStyle"],
+      "uploads": ["facePhoto", "fullBodyPhoto"]
+    },
+    {
+      "name": "AI Analysis",
+      "description": "AI automatically analyzes personal color, body shape, and suitable styles from uploaded photos.",
+      "targets": ["personalColor", "bodyShape", "suitableStyle"],
+      "source": "uploadedPhotos"
+    },
+    {
+      "name": "Daily Styling Recommendation",
+      "description": "Provides full outfit coordination based on environmental factors (weather, date) and personal factors (AI-analyzed personal color, body shape, preferred style).",
+      "environmentalFactors": ["currentDate", "weather (temperature, precipitation)"],
+      "personalFactors": ["aiPersonalColor", "aiBodyShape", "userPreferredStyle"],
+      "composition": ["tops", "bottoms", "outerwear", "shoes"],
+      "information": ["outfitPhoto", "brandProduct", "purchaseLink"]
+    },
+    {
+      "name": "Feedback",
+      "description": "Users provide 'like/dislike' and specific feedback on recommended outfits for AI learning.",
+      "types": ["like", "dislike", "textFeedback"],
+      "purpose": "AI_learning"
+    },
+    {
+      "name": "Save Style",
+      "description": "Users can save their favorite recommended styles."
+    }
+  ],
+  "techStack": {
+    "frontendBackend": "Next.js",
+    "databaseAuthentication": "Supabase",
+    "workflowAutomation": "n8n"
+  },
+  "aiModels": {
+    "personalColorAnalysis": {
+      "method": "CNN based image analysis",
+      "notes": "Consider open-source models, transfer learning, or external APIs (e.g., Color-AI API)."
+    },
+    "bodyShapeAnalysis": {
+      "method": "Pose Estimation (e.g., OpenPose) for landmark extraction and ratio analysis",
+      "notes": "Consider external APIs (e.g., AWS Rekognition Custom Labels)."
+    },
+    "styleRecommendation": {
+      "method": "Collaborative Filtering + Content-based Filtering with Reinforcement Learning from user feedback."
+    }
+  },
+  "dataSources": {
+    "weather": {
+      "api": "Korean Meteorological Administration, OpenWeatherMap, AccuWeather (selection based on region/stability)."
+    },
+    "clothing": {
+      "method": "Prioritize API integration with major shopping malls (e.g., Musinsa, Zigzag). Consider legal crawling or direct fashion brand integration."
+    }
+  },
+  "authentication": {
+    "supabaseDefault": "Email/Password",
+    "socialLogin": ["Google", "Kakao", "Naver"]
+  },
+  "errorHandling": {
+    "aiAnalysisFailure": "Prompt user to retry or provide manual input. Log failures for re-learning.",
+    "externalApiFailure": "Provide cached data or default message. Notify user. Implement monitoring and retry logic.",
+    "noRecommendation": "Display 'No recommendations' message or offer alternative styles."
+  },
+  "uiUx": {
+    "designApproach": "Mobile-first, responsive web design.",
+    "designSystem": "Material UI or Ant Design (preferred for consistency)."
+  },
+  "mvp": {
+    "phase1": [
+      "User Profile (basic inputs & photo upload)",
+      "Basic AI Analysis (personal color, body shape) - initial simple model/external API",
+      "Daily Styling Recommendation (weather, personal color, body shape based minimal co-ord)",
+      "Information Provision (photo, brand, link)",
+      "User Authentication (email/password)"
+    ],
+    "phase2": [
+      "Advanced AI Analysis",
+      "Feedback Feature",
+      "Save Style Feature",
+      "Social Login",
+      "Expanded Clothing Data Sources",
+      "Accessory Recommendations",
+      "Personalized Styling Reports"
+    ]
+  }
+}
