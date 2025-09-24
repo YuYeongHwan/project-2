@@ -116,11 +116,11 @@ export default function Home() {
 
   if (recommendation) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-gray-50 dark:bg-zinc-950">
+      <main className="flex min-h-screen flex-col items-center justify-center p-8">
         <RecommendationCard {...recommendation} />
         <button
           onClick={reset}
-          className="mt-8 px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="mt-8 px-8 py-3 border border-transparent rounded-full shadow-lg text-sm font-medium text-white bg-gradient-to-r from-pink-500 to-violet-500 hover:from-pink-600 hover:to-violet-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 transition-all transform hover:scale-105"
         >
           다른 이미지로 분석하기
         </button>
@@ -135,19 +135,19 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 text-center bg-gray-50 dark:bg-zinc-950">
+    <main className="flex min-h-screen flex-col items-center justify-center p-8 text-center">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         
       </div>
 
       <div className="relative z-[-1] flex flex-col items-center place-items-center mb-8">
-        <h1 className="text-5xl font-bold text-pink-500 mb-4">
+        <h1 className="text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
           AI.Styler ✨
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300">당신만을 위한 AI 스타일링</p>
+        <p className="text-lg text-slate-600 dark:text-slate-300">당신만을 위한 AI 스타일링</p>
       </div>
 
-      <div className="w-full max-w-md mx-auto bg-white dark:bg-zinc-900 rounded-xl shadow-md overflow-hidden md:max-w-2xl mt-8">
+      <div className="w-full max-w-md mx-auto bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md rounded-2xl shadow-lg overflow-hidden md:max-w-2xl mt-8">
         <div className="p-8">
           <p className="mt-2 text-slate-500 dark:text-slate-400">자신의 사진이나 원하는 스타일의 이미지를 업로드하여 AI의 맞춤 스타일 추천을 받아보세요.</p>
           
@@ -182,7 +182,7 @@ export default function Home() {
             <button
               onClick={handleUpload}
               disabled={isLoading || !selectedFile}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-md text-sm font-medium text-white bg-gradient-to-r from-pink-500 to-violet-500 hover:from-pink-600 hover:to-violet-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-slate-400 disabled:cursor-not-allowed transition-all transform hover:scale-105 disabled:scale-100"
             >
               {isLoading ? '업로드 중...' : '스타일 분석 요청'}
             </button>

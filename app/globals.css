@@ -3,6 +3,5 @@
 @tailwind utilities;
 
 body {
-  background: linear-gradient(to bottom right, #ffefba, #ffffff);
-  color: #333;
-}
+    @apply bg-gradient-to-br from-rose-50 via-purple-50 to-sky-100 dark:from-slate-900 dark:via-zinc-950 dark:to-slate-900;
+  }

@@ -18,10 +18,10 @@ interface RecommendationCardProps {
 
 export default function RecommendationCard({ weather, temperature, items }: RecommendationCardProps) {
   return (
-    <div className="bg-white dark:bg-zinc-900 shadow-2xl rounded-2xl p-6 sm:p-8 w-full max-w-5xl mx-auto transition-shadow duration-300 hover:shadow-xl">
+    <div className="bg-white/60 dark:bg-zinc-900/60 backdrop-blur-lg shadow-2xl rounded-2xl p-6 sm:p-8 w-full max-w-5xl mx-auto transition-shadow duration-300 hover:shadow-xl">
       <div className="flex justify-between items-start mb-6">
         <div className="flex-grow">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">✨ AI 스타일리스트의 추천 ✨</h2>
+          <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">✨ AI 스타일리스트의 추천 ✨</h2>
           <p className="text-gray-600 dark:text-gray-400 mt-2">오늘의 날씨(<span className="font-semibold text-blue-500">{weather}</span>, <span className="font-semibold text-red-500">{temperature}</span>)에 딱 맞는 스타일이에요!</p>
           <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">AI가 제안하는 스타일로 새로운 하루를 시작해보세요. 각 아이템을 클릭하면 구매 페이지로 이동할 수 있습니다.</p>
         </div>
