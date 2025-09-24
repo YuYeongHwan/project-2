@@ -3,7 +3,7 @@
 import React from 'react';
 import ClothingItem from './ClothingItem';
 import { ThumbsUp, ThumbsDown, Bookmark, Share2 } from 'lucide-react';
-import { ClothingItem as ClothingItemData } from '../../lib/types';
+import { ClothingItem as ClothingItemData } from '@/lib/types';
 
 interface RecommendationCardProps {
   weather: string;

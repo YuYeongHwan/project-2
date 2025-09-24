@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
-import { ClothingItem as ClothingItemProps } from '../../lib/types';
+import { ClothingItem as ClothingItemProps } from '@/lib/types';
 
 export default function ClothingItem({ name, brand, imageUrl, purchaseUrl }: ClothingItemProps) {
   return (
