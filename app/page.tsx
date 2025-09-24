@@ -3,6 +3,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import RecommendationCard from './components/recommendation/RecommendationCard';
 import { Recommendation, ClothingItem } from '../lib/types';
+import JsonViewer from './components/JsonViewer';
 
 const AnalysisInProgress = () => {
   return (
@@ -126,9 +127,7 @@ export default function Home() {
         {n8nResponse && (
             <div className="w-full max-w-5xl mt-8 p-4 bg-white dark:bg-zinc-900 rounded-xl shadow-md">
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">n8n 원본 응답 데이터:</h3>
-                <pre className="bg-gray-100 dark:bg-zinc-800 p-4 rounded-md text-xs overflow-x-auto text-left">
-                    <code>{JSON.stringify(n8nResponse, null, 2)}</code>
-                </pre>
+                <JsonViewer data={n8nResponse} />
             </div>
         )}
       </main>
