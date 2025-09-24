@@ -2,8 +2,7 @@
 
 import React, { useState, ChangeEvent } from 'react';
 import RecommendationCard from './components/recommendation/RecommendationCard';
-import { mockRecommendation } from '../lib/mock-data';
-import { Recommendation } from '../lib/types';
+import { Recommendation, ClothingItem } from '../lib/types';
 
 const AnalysisInProgress = () => {
   return (
@@ -49,18 +48,7 @@ export default function Home() {
     setIsLoading(true);
     setMessage('');
 
-    // --- 개발용 Mock 데이터 사용 ---
-    // 2초 후 Mock 데이터를 사용해 추천 화면을 보여줍니다.
-    // 실제 n8n 연동 시 이 부분을 주석 처리하고 아래의 실제 API 호출 로직을 사용하세요.
-    /*
-    setTimeout(() => {
-      setRecommendation(mockRecommendation);
-      setIsLoading(false);
-    }, 2000);
-    */
-
     // --- 실제 n8n Webhook 연동 로직 ---
-    // n8n Webhook이 준비되면 아래 주석을 해제하여 사용하세요.
     const formData = new FormData();
     formData.append('file', selectedFile);
 
@@ -72,8 +60,28 @@ export default function Home() {
       });
 
       if (response.ok) {
-        const data: Recommendation = await response.json();
-        setRecommendation(data);
+        const data = await response.json();
+
+        // API 응답은 추천 아이템 배열을 포함할 수 있으므로, 이를 파싱하여 Recommendation 객체 형태로 변환합니다.
+        const recommendedItems: ClothingItem[] = data.recommendations || [];
+        const itemsByType = recommendedItems.reduce((acc, item) => {
+            if (item.type) {
+                acc[item.type] = item;
+            }
+            return acc;
+        }, {} as { [key: string]: ClothingItem });
+        
+        const newRecommendation: Recommendation = {
+            weather: data.weather || '정보 없음',
+            temperature: data.temperature || '정보 없음',
+            items: {
+                top: itemsByType.top,
+                bottom: itemsByType.bottom,
+                outerwear: itemsByType.outerwear,
+                shoes: itemsByType.shoes,
+            }
+        };
+        setRecommendation(newRecommendation);
       } else {
         const errorData = await response.json();
         setMessage(`업로드 실패: ${errorData.message || '알 수 없는 오류'}`);

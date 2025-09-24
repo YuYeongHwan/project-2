@@ -34,7 +34,7 @@ export default function HomePage() {
     formData.append('file', selectedFile);
 
     try {
-      const response = await fetch('https://yuyeonghwan.app.n8n.cloud/webhook-test/9e61dbab-0082-47ad-9a01-94980b2d9a6f', {
+      const response = await fetch('https://yuyeonghwan.app.n8n.cloud/webhook/9e61dbab-0082-47ad-9a01-94980b2d9a6f', {
         method: 'POST',
         body: formData,
       });
