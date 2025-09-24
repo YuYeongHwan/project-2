@@ -20,6 +20,25 @@ const AnalysisInProgress = () => {
   );
 };
 
+const filterAnalysisData = (data: any) => {
+  if (!data || !data.features || !Array.isArray(data.features)) {
+    return data;
+  }
+
+  const keywords = ['모자', '상의', '하의', '신발'];
+  const filteredFeatures = data.features.filter((feature: any) => {
+    if (typeof feature?.name === 'string') {
+      return keywords.some((keyword) => feature.name.includes(keyword));
+    }
+    return false;
+  });
+
+  return {
+    ...data,
+    features: filteredFeatures,
+  };
+};
+
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -115,6 +134,7 @@ export default function Home() {
   }
 
   if (recommendation) {
+    const filteredResponse = filterAnalysisData(n8nResponse);
     return (
       <main className="flex min-h-screen flex-col items-center justify-center p-8">
         <RecommendationCard {...recommendation} />
@@ -125,10 +145,12 @@ export default function Home() {
           다른 이미지로 분석하기
         </button>
         {n8nResponse && (
-            <div className="w-full max-w-5xl mt-8 p-4 bg-white dark:bg-zinc-900 rounded-xl shadow-md">
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">n8n 원본 응답 데이터:</h3>
-                <JsonViewer data={n8nResponse} />
-            </div>
+          <div className="w-full max-w-5xl mt-8 p-4 bg-white dark:bg-zinc-900 rounded-xl shadow-md">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+              AI 분석 상세 데이터:
+            </h3>
+            <JsonViewer data={filteredResponse} />
+          </div>
         )}
       </main>
     );
