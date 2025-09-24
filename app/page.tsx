@@ -25,6 +25,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
+  const [n8nResponse, setN8nResponse] = useState<any>(null);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -54,13 +55,14 @@ export default function Home() {
 
     try {
       // 🚨 주의: 아래 URL은 예시이며, 실제 n8n Webhook URL로 변경해야 합니다.
-      const response = await fetch('https://yuyeonghwan.app.n8n.cloud/webhook-test/9e61dbab-0082-47ad-9a01-94980b2d9a6f', {
+      const response = await fetch('https://yuyeonghwan.app.n8n.cloud/webhook/9e61dbab-0082-47ad-9a01-94980b2d9a6f', {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
         const data = await response.json();
+        setN8nResponse(data);
 
         // API 응답은 추천 아이템 배열을 포함할 수 있으므로, 이를 파싱하여 Recommendation 객체 형태로 변환합니다.
         const recommendedItems: ClothingItem[] = data.recommendations || [];
@@ -86,11 +88,13 @@ export default function Home() {
         const errorData = await response.json();
         setMessage(`업로드 실패: ${errorData.message || '알 수 없는 오류'}`);
         setRecommendation(null); // 실패 시 추천 데이터 초기화
+        setN8nResponse(errorData);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Upload error:', error);
       setMessage('업로드 중 오류가 발생했습니다.');
       setRecommendation(null); // 오류 발생 시 추천 데이터 초기화
+      setN8nResponse({ error: error.toString() });
     } finally {
       setIsLoading(false);
     }
@@ -102,6 +106,7 @@ export default function Home() {
     setIsLoading(false);
     setMessage('');
     setRecommendation(null);
+    setN8nResponse(null);
   };
 
   if (isLoading) {
@@ -118,6 +123,14 @@ export default function Home() {
         >
           다른 이미지로 분석하기
         </button>
+        {n8nResponse && (
+            <div className="w-full max-w-5xl mt-8 p-4 bg-white dark:bg-zinc-900 rounded-xl shadow-md">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">n8n 원본 응답 데이터:</h3>
+                <pre className="bg-gray-100 dark:bg-zinc-800 p-4 rounded-md text-xs overflow-x-auto text-left">
+                    <code>{JSON.stringify(n8nResponse, null, 2)}</code>
+                </pre>
+            </div>
+        )}
       </main>
     );
   }
